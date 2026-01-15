@@ -368,6 +368,9 @@ export function LearningMaterials({
                   setIsMobileMenuOpen(false);
                 }}
               >
+                <span className='mr-2 font-mono text-xs opacity-60'>
+                  A
+                </span>
                 Alle Kategorien
               </Button>
               {learningData.map((category) => (
