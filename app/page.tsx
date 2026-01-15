@@ -273,7 +273,7 @@ export default function LearningMaterialsPage() {
   return (
     <div className='bg-background min-h-screen'>
       <header className='border-border bg-card/50 border-b backdrop-blur-sm'>
-        <div className='container mx-auto flex flex-col sm:flex-row justify-between px-4 py-8'>
+        <div className='container mx-auto flex flex-col justify-between px-4 py-8 sm:flex-row'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
             <div>
               <h1 className='mb-2 text-4xl font-bold tracking-tight text-balance'>
@@ -582,7 +582,7 @@ export default function LearningMaterialsPage() {
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border gap-2 flex flex-col sm:flex-row items-center justify-between border-b px-4 py-3 pl-12 transition-colors last:border-b-0'
+                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 sm:flex-row'
                                             >
                                               <div className='flex items-center gap-3'>
                                                 <span className='text-muted-foreground font-mono text-xs'>
