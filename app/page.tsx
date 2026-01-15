@@ -273,7 +273,7 @@ export default function LearningMaterialsPage() {
   return (
     <div className='bg-background min-h-screen'>
       <header className='border-border bg-card/50 border-b backdrop-blur-sm'>
-        <div className='container mx-auto flex flex-row justify-between px-4 py-8'>
+        <div className='container mx-auto flex flex-col sm:flex-row justify-between px-4 py-8'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
             <div>
               <h1 className='mb-2 text-4xl font-bold tracking-tight text-balance'>
@@ -283,6 +283,8 @@ export default function LearningMaterialsPage() {
                 IT-Systeme und Elektrotechnik Kursmaterialien
               </p>
             </div>
+          </div>
+          <div className='flex gap-2'>
             <Button
               variant='outline'
               size='icon'
@@ -291,8 +293,6 @@ export default function LearningMaterialsPage() {
             >
               <Filter className='h-5 w-5' />
             </Button>
-          </div>
-          <div>
             <ThemeToggle />
           </div>
         </div>
@@ -582,7 +582,7 @@ export default function LearningMaterialsPage() {
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border flex items-center justify-between border-b px-4 py-3 pl-12 transition-colors last:border-b-0'
+                                              className='hover:bg-accent/50 border-border gap-2 flex flex-col sm:flex-row items-center justify-between border-b px-4 py-3 pl-12 transition-colors last:border-b-0'
                                             >
                                               <div className='flex items-center gap-3'>
                                                 <span className='text-muted-foreground font-mono text-xs'>
