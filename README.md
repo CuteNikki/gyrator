@@ -1,3 +1,1 @@
-NextJS + Shadcn/UI + Theming + Prettier + Plugins
-
-Default Copy & Paste Repository
+Modern clone of https://gyrator.de/material
