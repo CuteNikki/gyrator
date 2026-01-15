@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { learningData } from '@/lib/data';
@@ -271,7 +272,7 @@ export default function LearningMaterialsPage() {
   return (
     <div className='bg-background min-h-screen'>
       <header className='border-border bg-card/50 border-b backdrop-blur-sm'>
-        <div className='container mx-auto px-4 py-8'>
+        <div className='container mx-auto px-4 py-8 flex flex-row justify-between'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
             <div>
               <h1 className='mb-2 text-4xl font-bold tracking-tight text-balance'>
@@ -289,6 +290,9 @@ export default function LearningMaterialsPage() {
             >
               <Filter className='h-5 w-5' />
             </Button>
+          </div>
+          <div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
