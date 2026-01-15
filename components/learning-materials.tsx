@@ -397,7 +397,9 @@ export function LearningMaterials({
               <div className='space-y-2'>
                 {Object.entries(materialTypeIcons).map(([type, Icon]) => (
                   <div key={type} className='flex items-center gap-2 text-sm'>
-                    <Icon className='text-muted-foreground h-4 w-4' />
+                    <Icon
+                      className={`${materialTypeColors[type]} size-6 resize-none rounded-md border p-1 transition-all`}
+                    />
                     <span className='text-muted-foreground'>{type}</span>
                   </div>
                 ))}
@@ -407,7 +409,7 @@ export function LearningMaterials({
 
           <main className='space-y-6 overflow-hidden'>
             <div className='flex items-center justify-between gap-2'>
-              <p className='text-muted-foreground leading-relaxed text-sm'>
+              <p className='text-muted-foreground text-sm leading-relaxed'>
                 Zuletzt aktualisiert: {lastUpdated}
               </p>
               <div className='flex justify-end'>
@@ -594,7 +596,7 @@ export function LearningMaterials({
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border flex items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 flex-col sm:flex-row'
+                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 sm:flex-row'
                                             >
                                               <div className='flex items-center gap-3'>
                                                 <span className='text-muted-foreground font-mono text-xs'>
