@@ -594,7 +594,7 @@ export function LearningMaterials({
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 sm:flex-row'
+                                              className='hover:bg-accent/50 border-border flex items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 flex-col sm:flex-row'
                                             >
                                               <div className='flex items-center gap-3'>
                                                 <span className='text-muted-foreground font-mono text-xs'>
@@ -607,7 +607,7 @@ export function LearningMaterials({
                                               {subtopic.materials &&
                                                 subtopic.materials.length >
                                                   0 && (
-                                                  <div className='flex flex-wrap justify-center gap-1.5'>
+                                                  <div className='flex flex-wrap justify-end gap-1.5'>
                                                     {subtopic.materials.map(
                                                       (material, idx) => {
                                                         const Icon =
@@ -625,12 +625,12 @@ export function LearningMaterials({
                                                             href={pdfUrl}
                                                             target='_blank'
                                                             rel='noopener noreferrer'
+                                                            title={material}
                                                             className={`${materialTypeColors[material]} inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-medium transition-all`}
                                                           >
                                                             {Icon && (
-                                                              <Icon className='mr-1.5 h-3.5 w-3.5' />
+                                                              <Icon className='h-3.5 w-3.5' />
                                                             )}
-                                                            {material}
                                                           </a>
                                                         );
                                                       },
