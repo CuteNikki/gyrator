@@ -595,7 +595,7 @@ export default function LearningMaterialsPage() {
                                               {subtopic.materials &&
                                                 subtopic.materials.length >
                                                   0 && (
-                                                  <div className='flex flex-wrap gap-1.5'>
+                                                  <div className='flex flex-wrap justify-center gap-1.5'>
                                                     {subtopic.materials.map(
                                                       (material, idx) => {
                                                         const Icon =
