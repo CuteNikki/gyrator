@@ -20,6 +20,7 @@ import {
   Search,
   X,
 } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -272,7 +273,7 @@ export default function LearningMaterialsPage() {
   return (
     <div className='bg-background min-h-screen'>
       <header className='border-border bg-card/50 border-b backdrop-blur-sm'>
-        <div className='container mx-auto px-4 py-8 flex flex-row justify-between'>
+        <div className='container mx-auto flex flex-row justify-between px-4 py-8'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
             <div>
               <h1 className='mb-2 text-4xl font-bold tracking-tight text-balance'>
@@ -644,6 +645,25 @@ export default function LearningMaterialsPage() {
           </main>
         </div>
       </div>
+
+      <footer className='border-border bg-card/50 text-muted-foreground border-t py-6 text-center text-sm backdrop-blur-sm'>
+        <div className='flex flex-col'>
+          <span>
+            Made with love by{' '}
+            <Link href={'https://niso.moe'} className='underline'>
+              Nikki
+            </Link>
+            .
+          </span>
+          <span>
+            A redesign of{' '}
+            <Link href={'https://gyrator.de/material'} className='underline'>
+              gyrator.de
+            </Link>
+            .
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }
