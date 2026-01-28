@@ -356,21 +356,20 @@ export function LearningMaterials({
               )}
             </div>
 
-            <div className='space-y-2'>
+            <div className=''>
               <h3 className='text-muted-foreground mb-3 text-sm font-semibold tracking-wider uppercase'>
                 Kategorien
               </h3>
               <Button
                 variant={selectedCategory === null ? 'secondary' : 'ghost'}
                 className='w-full justify-start font-medium'
+                size='lg'
                 onClick={() => {
                   setSelectedCategory(null);
                   setIsMobileMenuOpen(false);
                 }}
               >
-                <span className='mr-2 font-mono text-xs opacity-60'>
-                  A
-                </span>
+                <span className='mr-2 font-mono text-xs opacity-60'>A</span>
                 Alle Kategorien
               </Button>
               {learningData.map((category) => (
@@ -379,6 +378,7 @@ export function LearningMaterials({
                   variant={
                     selectedCategory === category.id ? 'secondary' : 'ghost'
                   }
+                  size='lg'
                   className='w-full justify-start font-medium'
                   onClick={() => {
                     setSelectedCategory(category.id);
@@ -599,7 +599,7 @@ export function LearningMaterials({
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-3 pl-12 transition-colors last:border-b-0 sm:flex-row'
+                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-2 pl-12 transition-colors last:border-b-0 sm:flex-row'
                                             >
                                               <div className='flex items-center gap-3'>
                                                 <span className='text-muted-foreground font-mono text-xs'>
