@@ -1,7 +1,7 @@
 import { LearningMaterials } from '@/components/learning-materials';
 import { scrapeGyrator } from '@/lib/data';
 
-export const revalidate = 3600; // Revalidate für die ganze Seite alle 60 Min
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const data = await scrapeGyrator();
