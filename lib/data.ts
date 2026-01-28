@@ -21,7 +21,11 @@ import * as cheerio from 'cheerio';
 
 export async function scrapeGyrator() {
   try {
-    const res = await fetch('https://gyrator.de/material/');
+    const res = await fetch('https://gyrator.de/material/', {
+      next: {
+        revalidate: 3600, // Revalidate every hour
+      },
+    });
 
     if (!res.ok) {
       return { error: 'Failed to fetch page', status: res.status };
