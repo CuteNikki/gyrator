@@ -82,8 +82,13 @@ export function LearningMaterials({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  // The page renders per request, so the server has the URL's search too
+  const [searchQuery, setSearchQuery] = useState(
+    () => searchParams.get('search') || '',
+  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    () => searchParams.get('category') || null,
+  );
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(),
   );
@@ -91,17 +96,6 @@ export function LearningMaterials({
     new Set(),
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    const search = searchParams.get('search') || '';
-    const category = searchParams.get('category') || null;
-
-    setSearchQuery(search);
-    setSelectedCategory(category);
-    setIsInitialized(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array - only run once on mount
 
   const materialTypeIcons: Record<string, LucideIcon> = {
     Lerntext: BookOpen,
@@ -148,7 +142,7 @@ export function LearningMaterials({
     return `https://www.gyrator.de/material/${cleanId}${code}.pdf`;
   };
 
-  const filteredData = useMemo(() => {
+  const filtered = useMemo(() => {
     // First, filter by category if selected
     let data = learningData;
     if (selectedCategory) {
@@ -159,7 +153,7 @@ export function LearningMaterials({
 
     // If no search query, return the category-filtered data
     if (!searchQuery) {
-      return data;
+      return { data, sectionsToExpand: new Set<string>() };
     }
 
     // Apply fuzzy search on the category-filtered data
@@ -219,14 +213,19 @@ export function LearningMaterials({
       })
       .filter(Boolean) as typeof learningData;
 
-    // Update expanded sections based on search results
-    if (sectionsToExpand.size > 0) {
-      setExpandedSections(sectionsToExpand);
-    }
+    return { data: results, sectionsToExpand };
+  }, [learningData, searchQuery, selectedCategory]);
+  const filteredData = filtered.data;
 
-    return results;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, selectedCategory]);
+  // A new search opens the sections where it matched a subtopic, set while
+  // rendering so they're open in the same render as the results
+  const [expandedFor, setExpandedFor] = useState<typeof filtered | null>(null);
+  if (expandedFor !== filtered) {
+    setExpandedFor(filtered);
+    if (filtered.sectionsToExpand.size > 0) {
+      setExpandedSections(filtered.sectionsToExpand);
+    }
+  }
 
   const toggleSection = (sectionId: string) => {
     const newExpanded = new Set(expandedSections);
@@ -259,8 +258,6 @@ export function LearningMaterials({
   };
 
   useEffect(() => {
-    if (!isInitialized) return;
-
     const params = new URLSearchParams();
 
     if (searchQuery) {
@@ -275,7 +272,7 @@ export function LearningMaterials({
       ? `${pathname}?${params.toString()}`
       : pathname;
     router.replace(newUrl, { scroll: false });
-  }, [searchQuery, selectedCategory, pathname, router, isInitialized]);
+  }, [searchQuery, selectedCategory, pathname, router]);
 
   return (
     <div className='bg-background min-h-screen'>
