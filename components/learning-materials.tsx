@@ -1,10 +1,10 @@
 'use client';
 
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Category } from '@/lib/data';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+
 import {
   BookOpen,
   CheckSquare,
@@ -20,9 +20,12 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+
+import { Category } from '@/lib/data';
+
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 // Levenshtein distance algorithm for fuzzy string matching
 function levenshteinDistance(str1: string, str2: string): number {
@@ -44,7 +47,7 @@ function levenshteinDistance(str1: string, str2: string): number {
       matrix[i][j] = Math.min(
         matrix[i - 1][j] + 1, // deletion
         matrix[i][j - 1] + 1, // insertion
-        matrix[i - 1][j - 1] + cost, // substitution
+        matrix[i - 1][j - 1] + cost // substitution
       );
     }
   }
@@ -84,16 +87,16 @@ export function LearningMaterials({
 
   // The page renders per request, so the server has the URL's search too
   const [searchQuery, setSearchQuery] = useState(
-    () => searchParams.get('search') || '',
+    () => searchParams.get('search') || ''
   );
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    () => searchParams.get('category') || null,
+    () => searchParams.get('category') || null
   );
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
-    new Set(),
+    new Set()
   );
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(
-    new Set(),
+    new Set()
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -147,7 +150,7 @@ export function LearningMaterials({
     let data = learningData;
     if (selectedCategory) {
       data = learningData.filter(
-        (category) => category.id === selectedCategory,
+        (category) => category.id === selectedCategory
       );
     }
 
@@ -165,7 +168,7 @@ export function LearningMaterials({
         // Check if category matches
         const categoryScore = Math.max(
           fuzzyMatch(searchQuery, category.name),
-          fuzzyMatch(searchQuery, category.id),
+          fuzzyMatch(searchQuery, category.id)
         );
 
         // If category matches well, return all topics
@@ -177,7 +180,7 @@ export function LearningMaterials({
         const filteredTopics = category.topics.filter((topic) => {
           const topicScore = Math.max(
             fuzzyMatch(searchQuery, topic.title),
-            fuzzyMatch(searchQuery, topic.id),
+            fuzzyMatch(searchQuery, topic.id)
           );
 
           if (topicScore >= threshold) {
@@ -189,7 +192,7 @@ export function LearningMaterials({
             const hasMatchingSubtopic = topic.subtopics.some((subtopic) => {
               const subtopicScore = Math.max(
                 fuzzyMatch(searchQuery, subtopic.title),
-                fuzzyMatch(searchQuery, subtopic.id),
+                fuzzyMatch(searchQuery, subtopic.id)
               );
 
               if (subtopicScore >= threshold) {
@@ -275,15 +278,15 @@ export function LearningMaterials({
   }, [searchQuery, selectedCategory, pathname, router]);
 
   return (
-    <div className='bg-background min-h-screen'>
-      <header className='border-border bg-card/50 border-b backdrop-blur-sm'>
+    <div className='min-h-screen bg-background'>
+      <header className='border-b border-border bg-card/50 backdrop-blur-sm'>
         <div className='container mx-auto flex flex-col justify-between px-4 py-8 sm:flex-row'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
             <div>
               <h1 className='mb-2 text-4xl font-bold tracking-tight text-balance'>
                 Lernmaterialien
               </h1>
-              <p className='text-muted-foreground text-lg leading-relaxed'>
+              <p className='text-lg leading-relaxed text-muted-foreground'>
                 IT-Systeme und Elektrotechnik Kursmaterialien
               </p>
             </div>
@@ -321,7 +324,7 @@ export function LearningMaterials({
             initial={false}
             animate={{ x: isMobileMenuOpen ? 0 : '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={`bg-background border-border fixed top-0 left-0 z-50 h-screen w-70 space-y-6 overflow-y-auto border-r p-4 lg:sticky lg:top-4 lg:z-auto lg:h-fit lg:w-auto lg:transform-none! lg:overflow-visible lg:border-r-0 lg:bg-transparent lg:p-0`}
+            className={`fixed top-0 left-0 z-50 h-screen w-70 space-y-6 overflow-y-auto border-r border-border bg-background p-4 lg:sticky lg:top-4 lg:z-auto lg:h-fit lg:w-auto lg:transform-none! lg:overflow-visible lg:border-r-0 lg:bg-transparent lg:p-0`}
           >
             <div className='mb-4 flex items-center justify-between lg:hidden'>
               <h2 className='font-semibold'>Filter</h2>
@@ -335,17 +338,17 @@ export function LearningMaterials({
             </div>
 
             <div className='relative'>
-              <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
+              <Search className='absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground' />
               <Input
                 placeholder='Suchen...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='bg-card border-border pr-9 pl-9'
+                className='border-border bg-card pr-9 pl-9'
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className='text-muted-foreground hover:text-foreground absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transition-colors'
+                  className='absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground'
                   aria-label='Suche leeren'
                 >
                   <X className='h-4 w-4' />
@@ -354,7 +357,7 @@ export function LearningMaterials({
             </div>
 
             <div className=''>
-              <h3 className='text-muted-foreground mb-3 text-sm font-semibold tracking-wider uppercase'>
+              <h3 className='mb-3 text-sm font-semibold tracking-wider text-muted-foreground uppercase'>
                 Kategorien
               </h3>
               <Button
@@ -390,8 +393,8 @@ export function LearningMaterials({
               ))}
             </div>
 
-            <div className='border-border space-y-2 border-t pt-4'>
-              <h3 className='text-muted-foreground mb-3 text-sm font-semibold tracking-wider uppercase'>
+            <div className='space-y-2 border-t border-border pt-4'>
+              <h3 className='mb-3 text-sm font-semibold tracking-wider text-muted-foreground uppercase'>
                 Materialtypen
               </h3>
               <div className='space-y-2'>
@@ -409,7 +412,7 @@ export function LearningMaterials({
 
           <main className='space-y-6 overflow-hidden'>
             <div className='flex items-center justify-between gap-2'>
-              <p className='text-muted-foreground text-sm leading-relaxed'>
+              <p className='text-sm leading-relaxed text-muted-foreground'>
                 Zuletzt aktualisiert: {lastUpdated}
               </p>
               <div className='flex justify-end'>
@@ -441,7 +444,7 @@ export function LearningMaterials({
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className='py-12 text-center'
               >
-                <p className='text-muted-foreground text-lg'>
+                <p className='text-lg text-muted-foreground'>
                   Keine Ergebnisse gefunden
                 </p>
               </motion.div>
@@ -449,7 +452,7 @@ export function LearningMaterials({
               <AnimatePresence mode='wait'>
                 {filteredData.map((category, categoryIndex) => {
                   const isCategoryCollapsed = collapsedCategories.has(
-                    category.id,
+                    category.id
                   );
 
                   return (
@@ -473,10 +476,10 @@ export function LearningMaterials({
                           animate={{ rotate: isCategoryCollapsed ? 0 : 90 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <ChevronRight className='text-muted-foreground h-5 w-5' />
+                          <ChevronRight className='h-5 w-5 text-muted-foreground' />
                         </motion.div>
-                        <div className='bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg'>
-                          <span className='text-primary font-mono font-bold'>
+                        <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10'>
+                          <span className='font-mono font-bold text-primary'>
                             {category.id}
                           </span>
                         </div>
@@ -484,7 +487,7 @@ export function LearningMaterials({
                           <h2 className='text-2xl font-bold tracking-tight'>
                             {category.name}
                           </h2>
-                          <p className='text-muted-foreground text-sm'>
+                          <p className='text-sm text-muted-foreground'>
                             {category.topics.length} Themen
                           </p>
                         </div>
@@ -502,7 +505,7 @@ export function LearningMaterials({
                             <AnimatePresence mode='wait'>
                               {category.topics.map((topic, topicIndex) => {
                                 const isExpanded = expandedSections.has(
-                                  topic.id,
+                                  topic.id
                                 );
                                 const hasSubtopics =
                                   topic.subtopics && topic.subtopics.length > 0;
@@ -518,13 +521,13 @@ export function LearningMaterials({
                                       delay: topicIndex * 0.03,
                                       ease: 'easeOut',
                                     }}
-                                    className='border-border bg-card overflow-hidden rounded-lg border'
+                                    className='overflow-hidden rounded-lg border border-border bg-card'
                                   >
                                     <button
                                       onClick={() =>
                                         hasSubtopics && toggleSection(topic.id)
                                       }
-                                      className='hover:bg-accent/50 flex w-full items-center justify-between px-4 py-3 transition-colors'
+                                      className='flex w-full items-center justify-between px-4 py-3 transition-colors hover:bg-accent/50'
                                     >
                                       <div className='flex items-center gap-3'>
                                         {hasSubtopics && (
@@ -534,10 +537,10 @@ export function LearningMaterials({
                                             }}
                                             transition={{ duration: 0.2 }}
                                           >
-                                            <ChevronRight className='text-muted-foreground h-4 w-4' />
+                                            <ChevronRight className='h-4 w-4 text-muted-foreground' />
                                           </motion.div>
                                         )}
-                                        <span className='text-muted-foreground font-mono text-xs'>
+                                        <span className='font-mono text-xs text-muted-foreground'>
                                           {topic.id}
                                         </span>
                                         <span className='font-medium'>
@@ -556,7 +559,7 @@ export function LearningMaterials({
                                                   materialTypeIcons[material];
                                                 const pdfUrl = generatePdfUrl(
                                                   topic.id,
-                                                  material,
+                                                  material
                                                 );
                                                 return (
                                                   <a
@@ -572,7 +575,7 @@ export function LearningMaterials({
                                                     {material}
                                                   </a>
                                                 );
-                                              },
+                                              }
                                             )}
                                           </div>
                                         )}
@@ -591,15 +594,15 @@ export function LearningMaterials({
                                             duration: 0.3,
                                             ease: 'easeInOut',
                                           }}
-                                          className='border-border bg-accent/20 overflow-hidden border-t'
+                                          className='overflow-hidden border-t border-border bg-accent/20'
                                         >
                                           {topic.subtopics?.map((subtopic) => (
                                             <div
                                               key={subtopic.id}
-                                              className='hover:bg-accent/50 border-border flex flex-col items-center justify-between gap-2 border-b px-4 py-2 pl-12 transition-colors last:border-b-0 sm:flex-row'
+                                              className='flex flex-col items-center justify-between gap-2 border-b border-border px-4 py-2 pl-12 transition-colors last:border-b-0 hover:bg-accent/50 sm:flex-row'
                                             >
                                               <div className='flex items-center gap-3'>
-                                                <span className='text-muted-foreground font-mono text-xs'>
+                                                <span className='font-mono text-xs text-muted-foreground'>
                                                   {subtopic.id}
                                                 </span>
                                                 <span className='text-sm'>
@@ -619,7 +622,7 @@ export function LearningMaterials({
                                                         const pdfUrl =
                                                           generatePdfUrl(
                                                             subtopic.id,
-                                                            material,
+                                                            material
                                                           );
                                                         return (
                                                           <a
@@ -635,7 +638,7 @@ export function LearningMaterials({
                                                             )}
                                                           </a>
                                                         );
-                                                      },
+                                                      }
                                                     )}
                                                   </div>
                                                 )}
@@ -660,7 +663,7 @@ export function LearningMaterials({
         </div>
       </div>
 
-      <footer className='border-border bg-card/50 text-muted-foreground border-t py-6 text-center text-sm backdrop-blur-sm'>
+      <footer className='border-t border-border bg-card/50 py-6 text-center text-sm text-muted-foreground backdrop-blur-sm'>
         <div className='flex flex-col'>
           <span>
             Made with love by{' '}

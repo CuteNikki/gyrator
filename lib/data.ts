@@ -1,3 +1,5 @@
+import * as cheerio from 'cheerio';
+
 export interface Subtopic {
   id: string;
   title: string;
@@ -16,8 +18,6 @@ export interface Category {
   name: string;
   topics: Topic[];
 }
-
-import * as cheerio from 'cheerio';
 
 export async function scrapeGyrator() {
   try {

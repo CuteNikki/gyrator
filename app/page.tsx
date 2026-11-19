@@ -1,5 +1,6 @@
-import { LearningMaterials } from '@/components/learning-materials';
 import { scrapeGyrator } from '@/lib/data';
+
+import { LearningMaterials } from '@/components/learning-materials';
 
 export const dynamic = 'force-dynamic';
 
