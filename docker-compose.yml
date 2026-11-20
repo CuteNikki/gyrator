@@ -1,0 +1,10 @@
+# For the repository. Put it behind a reverse proxy that serves it over HTTPS.
+services:
+  gyrator:
+    build: .
+    container_name: gyrator
+    restart: unless-stopped
+    # For a reverse proxy on the same machine. One in Docker can reach it on
+    # a shared network instead: add that in a compose.override.yaml.
+    ports:
+      - '127.0.0.1:${PORT:-3000}:3000'
