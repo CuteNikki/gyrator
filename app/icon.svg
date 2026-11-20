@@ -6,7 +6,11 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="15" fill="url(#g)"/>
-  <path d="M42.28 19.74 A16 16 0 1 1 21.72 19.74" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
-  <path d="M26.69 15.57 L17.48 15.47 L25.19 24.66 Z" fill="#fff" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
-  <circle cx="32" cy="32" r="5.5" fill="#fff"/>
+  <g transform="translate(0 3)">
+  <!-- An open book: two pages meeting at the spine -->
+  <path d="M31 28.5C26 25.5 19.5 25 13 26.5V48.5C19.5 47 26 47.5 31 50.5Z" fill="#fff"/>
+  <path d="M33 28.5C38 25.5 44.5 25 51 26.5V48.5C44.5 47 38 47.5 33 50.5Z" fill="#fff"/>
+  <!-- A spark above it -->
+  <path d="M35.5 7.5 24.5 24H31.5L28.5 35.5 39.5 19H32.5Z" fill="#fde047" stroke="#007e57" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke"/>
+  </g>
 </svg>
