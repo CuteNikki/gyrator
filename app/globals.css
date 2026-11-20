@@ -125,6 +125,11 @@
   html {
     overflow-y: scroll;
   }
+  /* A menu or dialog that's open locks the page and makes up for the scrollbar it expects to hide with a margin.
+     The scrollbar stays here, so that margin would shift the page instead. */
+  html body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
   body {
     @apply bg-background text-foreground;
   }
