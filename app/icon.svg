@@ -4,18 +4,16 @@
       <stop offset="0" stop-color="#15ba81"/>
       <stop offset="1" stop-color="#007e57"/>
     </linearGradient>
-    <path id="bolt" d="M41.5 6 18 37.5H30.5L24 58 47.5 26.5H35Z" stroke-linejoin="round"/>
-    <!-- A cut around the bolt where it crosses the book, so the two stay apart -->
+    <!-- The bolt cut out of the book: where it crosses the pages, the green shows through -->
     <mask id="cut">
       <rect width="64" height="64" fill="#fff"/>
-      <use href="#bolt" fill="#000" stroke="#000" stroke-width="6.5"/>
+      <path d="M39.5 9 19.5 37H31L25.5 55.5 45.5 27H34Z" fill="#000" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
     </mask>
   </defs>
   <rect width="64" height="64" rx="15" fill="url(#g)"/>
   <!-- An open book: two pages meeting at the spine -->
   <g fill="#fff" mask="url(#cut)">
-    <path d="M30.5 19C25 15.5 17.5 15 10.5 17V48C17.5 46 25 46.5 30.5 50Z"/>
-    <path d="M33.5 19C39 15.5 46.5 15 53.5 17V48C46.5 46 39 46.5 33.5 50Z"/>
+    <path d="M30.5 17C25 13.5 17.5 13 10.5 15V49C17.5 47 25 47.5 30.5 51Z"/>
+    <path d="M33.5 17C39 13.5 46.5 13 53.5 15V49C46.5 47 39 47.5 33.5 51Z"/>
   </g>
-  <use href="#bolt" fill="#fff" stroke="#fff" stroke-width="1.5"/>
 </svg>
