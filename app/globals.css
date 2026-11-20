@@ -120,6 +120,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* The scrollbar always there, if with nothing to scroll, so the page doesn't shift sideways when it becomes long
+     enough to scroll */
+  html {
+    overflow-y: scroll;
+  }
   body {
     @apply bg-background text-foreground;
   }
