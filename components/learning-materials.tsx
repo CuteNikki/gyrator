@@ -278,7 +278,8 @@ export function LearningMaterials({
   }, [searchQuery, selectedCategory, pathname, router]);
 
   return (
-    <div className='min-h-screen bg-background'>
+    // A column the screen's height at least, so the footer stays at the bottom of a short page
+    <div className='flex min-h-svh flex-col bg-background'>
       <header className='border-b border-border bg-card/50 backdrop-blur-sm'>
         <div className='container mx-auto flex flex-col justify-between px-4 py-8 sm:flex-row'>
           <div className='mb-4 flex items-center justify-between lg:mb-0'>
@@ -305,7 +306,7 @@ export function LearningMaterials({
         </div>
       </header>
 
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto flex-1 px-4 py-8'>
         <div className='grid gap-8 lg:grid-cols-[280px_1fr]'>
           <AnimatePresence>
             {isMobileMenuOpen && (
